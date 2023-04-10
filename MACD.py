@@ -24,5 +24,7 @@ def calculate_macd(ticker):
     
     # Calculate the histogram
     histogram = macd_line - signal_line
-    
-    return macd_line, signal_line, histogram
+    if histogram[-1] > 0:
+        return "Buy"
+    else:
+        return "Sell"
