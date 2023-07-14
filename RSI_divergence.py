@@ -1,12 +1,10 @@
 #relative strength index indicator accounting for divergence
 
-import yfinance as yf
 import pandas as pd
 import numpy as np
 
-def calculate_RSI(ticker, period=14):
+def calculate_RSI(stock, period=14):
     # Get historical data using yfinance
-    stock = yf.Ticker(ticker)
     stock_data = stock.history(period="1y")
 
     # Calculate price change and gain/loss

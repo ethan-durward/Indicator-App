@@ -112,9 +112,9 @@ class StockAnalyzerApp(tk.Tk):
         # Get stock information
         stock_info = {
             "ticker": ticker,
-            "current_price": get_current_price(ticker),
-            "intraday_change": get_intraday_change(ticker),
-            "intraday_percent_change": get_intraday_percent_change(ticker),
+            "current_price": get_current_price(stock),
+            "intraday_change": get_intraday_change(stock),
+            "intraday_percent_change": get_intraday_percent_change(stock),
         }
         
         # Vertically stack the information
@@ -127,10 +127,10 @@ class StockAnalyzerApp(tk.Tk):
         selected_indicator = self.indicator_var.get()
 
         if selected_indicator == "momentum":
-            buy_or_sell = momentum_buy_sell(ticker)
+            buy_or_sell = momentum_buy_sell(stock)
         
         elif selected_indicator == "RSI":
-            buy_or_sell = calculate_RSI(ticker)
+            buy_or_sell = calculate_RSI(stock)
 
         elif selected_indicator == "MACD":
             buy_or_sell = calculate_macd(ticker)
@@ -203,17 +203,14 @@ class StockAnalyzerApp(tk.Tk):
         self.other_button["bg"] = color_active if selected_button == "other" else color_inactive
     
 
-def get_current_price(ticker):
-    stock = yf.Ticker(ticker)
+def get_current_price(stock):
     today = stock.history(period='1d')
     return today['Close'][0]
 
-def get_intraday_change(ticker):
-    stock = yf.Ticker(ticker)
+def get_intraday_change(stock):
     return round((stock.history(period='1d')['Close'][0] - stock.history(period='1d')['Open'][0]), 2)
 
-def get_intraday_percent_change(ticker):
-    stock = yf.Ticker(ticker)
+def get_intraday_percent_change(stock):
     return round((stock.history(period="1d")["Close"][0] - stock.history(period="1d")["Open"][0]) / stock.history(period="1d")["Open"][0] * 100, 2)
 
 

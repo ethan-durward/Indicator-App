@@ -1,10 +1,8 @@
 #momentum-based strategy
 
-import yfinance as yf
 import pandas as pd
 
-def momentum_buy_sell(ticker):
-    stock = yf.Ticker(ticker)
+def momentum_buy_sell(stock):
     hist = stock.history(period="max")
     curr_price = stock.history(period="1d")["Close"][0]
     long_moving_avg = pd.Series(hist['Close']).rolling(window=200).mean().iloc[-1]
